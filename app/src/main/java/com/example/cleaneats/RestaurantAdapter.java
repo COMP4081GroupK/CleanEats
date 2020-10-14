@@ -14,10 +14,10 @@ import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> implements Filterable {
 
-    private List<Restaurant> restaurants;
+    private List<ScoreSample> restaurants;
     private Context context;
     //private List<String> justNames; //We use this list for the search functions, as long as somebody remembers to actually declare it
-    private List<Restaurant> tempList;
+    private List<ScoreSample> tempList;
 
     public RestaurantAdapter(Context context) {
         this.context = context;
@@ -36,9 +36,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        String restaurantName = restaurants.get(position).getRestaurantName();
-        String restaurantAddress = restaurants.get(position).getRestaurantAddress();
-        int inspectionScore = restaurants.get(position).getInspectionScore();
+        String restaurantName = restaurants.get(position).getName();
+        String restaurantAddress = restaurants.get(position).getAddress();
+        int inspectionScore = restaurants.get(position).getScore();
 
         holder.restaurantName.setText(restaurantName);
         holder.restaurantAddress.setText(restaurantAddress);
@@ -51,17 +51,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return restaurants.size();
     }
 
-    public void setNumbers(List<Restaurant> restaurants) {
+    public void setNumbers(List<ScoreSample> restaurants) {
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }
 
-   public void searchSetUp(){  //Was NonNull needed? Who knows! I just did it to get rid of the @ in the IDE
+    public void searchSetUp(){  //Was NonNull needed? Who knows! I just did it to get rid of the @ in the IDE
 
-       for(int x = 0; x < this.restaurants.size(); x++){
-           this.tempList.add(this.restaurants.get(x));
-       }
-   }
+        for(int x = 0; x < this.restaurants.size(); x++){
+            this.tempList.add(this.restaurants.get(x));
+        }
+    }
 
     class RestaurantViewHolder extends RecyclerView.ViewHolder {
 
@@ -87,9 +87,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 if (charString.isEmpty()) {
                     tempList = restaurants;
                 } else {
-                    List<Restaurant> filteredList = new ArrayList<>();
-                    for (Restaurant rest : restaurants) {
-                        if (rest.getRestaurantName().toLowerCase().contains(charString.toLowerCase())) {    //so results aren't case sensitive
+                    List<ScoreSample> filteredList = new ArrayList<>();
+                    for (ScoreSample rest : restaurants) {
+                        if (rest.getName().toLowerCase().contains(charString.toLowerCase())) {    //so results aren't case sensitive
                             filteredList.add(rest);
                         }
                     }
@@ -103,7 +103,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                tempList = (ArrayList<Restaurant>) filterResults.values;
+                tempList = (ArrayList<ScoreSample>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

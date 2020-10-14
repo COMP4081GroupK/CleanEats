@@ -8,9 +8,15 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.SearchView;
 import android.view.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,27 +46,43 @@ public class MainActivity extends AppCompatActivity{
 
         //List<Restaurant> names = new ArrayList<>();   //the list we use for the search function
 
-        final List<Restaurant> restaurants = new ArrayList<>();   //the list of restaurants to go in the recyclerview
-        restaurants.add(new Restaurant("Moe's Southwest Grill",
-                "2491 Winchester Rd. Memphis, TN 38116", 98));
-        restaurants.add(new Restaurant("Starbucks",
-                "2421 Patterson Rd. Memphis, TN 38116", 88));
-        restaurants.add(new Restaurant("Ranchito Taqueria",
-                "3916 Macon Rd. Memphis, TN 38122", 93));
-        restaurants.add(new Restaurant("Lucy J's Bakery",
-                "1350 Concourse Rd. Memphis, TN 38104", 98));
-        restaurants.add(new Restaurant("McDonald's",
-                "1206 N. Houston Levee Cordova, TN 38108", 98));
-        restaurants.add(new Restaurant("Sonic",
-                "1111 Poplar Ave. Memphis, TN 38104", 77));
-        restaurants.add(new Restaurant("Moe's Southwest Grill",
-                "2491 Winchester Rd. Memphis, TN 38116", 98));
 
-        adapter.setNumbers(restaurants);
+        adapter.setNumbers(scoreSamples);
 
         search = findViewById(R.id.search);
         //Insert search here
+    }
 
+    private List<ScoreSample> scoreSamples = new ArrayList<>();
 
-}
+    private void readScores() {
+        InputStream is = getResources().openRawResource(R.raw.shelby);
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(is, Charset.forName("UTF-8"))
+        );
+
+        String line = "";
+        try {
+            // Step over headers
+            reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                Log.d("MyActivity", "Line: " + line);
+                // Split by ','
+                String[] tokens = line.split(",");
+
+                // Read the data
+                ScoreSample sample = new ScoreSample();
+                sample.setName(tokens[0]);
+                sample.setAddress(tokens[1]);
+                sample.setDate(tokens[2]);
+                sample.setScore(Integer.parseInt(tokens[3]));
+                scoreSamples.add(sample);
+
+                Log.d("MyActivity", "Just created: " + sample);
+            }
+        } catch (IOException e) {
+            Log.wtf("MyActivity", "Error reading data file on line " + line, e);
+            e.printStackTrace();
+        }
+    }
 }
