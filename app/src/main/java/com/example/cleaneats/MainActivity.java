@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SearchView;
-import android.view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,22 +35,19 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = getIntent();
         if (intent != null) keyword = intent.getStringExtra("keyword");
 
+        search = findViewById(R.id.search);
+
         recyclerView = findViewById(R.id.rv_mainActivity);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RestaurantAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        //List<Restaurant> names = new ArrayList<>();   //the list we use for the search function
-
-
-        adapter.setNumbers(scoreSamples);
-
-        search = findViewById(R.id.search);
-        //Insert search here
+        readScores();
+        adapter.setNumbers(restaurantInfos);
     }
 
-    private List<ScoreSample> scoreSamples = new ArrayList<>();
+    private List<RestaurantInfo> restaurantInfos = new ArrayList<>();
 
     private void readScores() {
         InputStream is = getResources().openRawResource(R.raw.shelby);
@@ -71,12 +65,12 @@ public class MainActivity extends AppCompatActivity{
                 String[] tokens = line.split(",");
 
                 // Read the data
-                ScoreSample sample = new ScoreSample();
+                RestaurantInfo sample = new RestaurantInfo();
                 sample.setName(tokens[0]);
                 sample.setAddress(tokens[1]);
                 sample.setDate(tokens[2]);
                 sample.setScore(Integer.parseInt(tokens[3]));
-                scoreSamples.add(sample);
+                restaurantInfos.add(sample);
 
                 Log.d("MyActivity", "Just created: " + sample);
             }

@@ -1,6 +1,6 @@
 package com.example.cleaneats;
 
-public class ScoreSample {
+public class RestaurantInfo {
     private String name;
     private String address;
     private String date;

@@ -14,10 +14,10 @@ import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> implements Filterable {
 
-    private List<ScoreSample> restaurants;
+    private List<RestaurantInfo> restaurants;
     private Context context;
     //private List<String> justNames; //We use this list for the search functions, as long as somebody remembers to actually declare it
-    private List<ScoreSample> tempList;
+    private List<RestaurantInfo> tempList;
 
     public RestaurantAdapter(Context context) {
         this.context = context;
@@ -51,7 +51,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return restaurants.size();
     }
 
-    public void setNumbers(List<ScoreSample> restaurants) {
+    public void setNumbers(List<RestaurantInfo> restaurants) {
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }
@@ -87,8 +87,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 if (charString.isEmpty()) {
                     tempList = restaurants;
                 } else {
-                    List<ScoreSample> filteredList = new ArrayList<>();
-                    for (ScoreSample rest : restaurants) {
+                    List<RestaurantInfo> filteredList = new ArrayList<>();
+                    for (RestaurantInfo rest : restaurants) {
                         if (rest.getName().toLowerCase().contains(charString.toLowerCase())) {    //so results aren't case sensitive
                             filteredList.add(rest);
                         }
@@ -103,7 +103,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                tempList = (ArrayList<ScoreSample>) filterResults.values;
+                tempList = (ArrayList<RestaurantInfo>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
