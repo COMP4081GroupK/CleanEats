@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         setTitle("Restaurants");
 
+        readScores();
+
         Intent intent = getIntent();
         if (intent != null) keyword = intent.getStringExtra("keyword");
 
