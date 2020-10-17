@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity{
 
     String keyword = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +32,9 @@ public class MainActivity extends AppCompatActivity{
         setTitle("Restaurants");
 
         Intent intent = getIntent();
-        if (intent != null) keyword = intent.getStringExtra("keyword");
+        if (intent != null) {
+            keyword = intent.getStringExtra("keyword").toLowerCase();
+        }
 
         search = findViewById(R.id.search);
 
@@ -64,15 +65,26 @@ public class MainActivity extends AppCompatActivity{
                 // Split by ','
                 String[] tokens = line.split(",");
 
-                // Read the data
+                String searchName = tokens[0].toLowerCase();
                 RestaurantInfo sample = new RestaurantInfo();
-                sample.setName(tokens[0]);
-                sample.setAddress(tokens[1]);
-                sample.setDate(tokens[2]);
-                sample.setScore(Integer.parseInt(tokens[3]));
-                restaurantInfos.add(sample);
 
-                Log.d("MyActivity", "Just created: " + sample);
+                //Only add the restaurants that have names that match the search keyword
+                if(searchName.contains(keyword)) {
+                    // Read the data
+                    sample.setName(tokens[0]);
+                    sample.setAddress(tokens[1]);
+                    sample.setDate(tokens[2]);
+                    sample.setScore(Integer.parseInt(tokens[3]));
+                    restaurantInfos.add(sample);
+                } else if (keyword.equals("")) { //If keyword is empty then just display every restaurant
+                    // Read the data
+                    sample.setName(tokens[0]);
+                    sample.setAddress(tokens[1]);
+                    sample.setDate(tokens[2]);
+                    sample.setScore(Integer.parseInt(tokens[3]));
+                    restaurantInfos.add(sample);
+                }
+
             }
         } catch (IOException e) {
             Log.wtf("MyActivity", "Error reading data file on line " + line, e);
