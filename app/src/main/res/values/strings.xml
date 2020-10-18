@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Clean Eats</string>
+    <string name="search">Search</string>
+    <string name="filter_by_name">Filter By Name</string>
 </resources>

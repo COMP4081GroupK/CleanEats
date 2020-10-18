@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.SearchView;
+import android.view.View;
+import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity{
 
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
-    private SearchView search;
+    private EditText keywordEditTextMain;
 
     String keyword = "";
 
@@ -36,7 +37,19 @@ public class MainActivity extends AppCompatActivity{
             keyword = intent.getStringExtra("keyword").toLowerCase();
         }
 
-        search = findViewById(R.id.search);
+        //This lets the user filter results from the main page itself
+        keywordEditTextMain = findViewById(R.id.mainPageActivity_keyword);
+
+        keywordEditTextMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keyword = keywordEditTextMain.getText().toString();
+
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.putExtra("keyword", keyword);
+                startActivity(intent);
+            }
+        });
 
         recyclerView = findViewById(R.id.rv_mainActivity);
         recyclerView.setHasFixedSize(true);
