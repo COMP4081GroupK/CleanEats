@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.BufferedReader;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
     private EditText keywordEditTextMain;
+    private Button searchButton;
 
     String keyword = "";
 
@@ -39,8 +41,9 @@ public class MainActivity extends AppCompatActivity{
 
         //This lets the user filter results from the main page itself
         keywordEditTextMain = findViewById(R.id.mainPageActivity_keyword);
+        searchButton = findViewById(R.id.bt_mainPageActivity_search);
 
-        keywordEditTextMain.setOnClickListener(new View.OnClickListener() {
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 keyword = keywordEditTextMain.getText().toString();

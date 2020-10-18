@@ -9,24 +9,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="77dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical">
 
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/mainPageActivity_keyword"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:autofillHints=""
-            android:hint="@string/filter_by_name"
-            android:inputType="text" />
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/mainPageActivity_keyword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/filter_by_name"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/bt_mainPageActivity_search"
+                android:foreground="@drawable/ic_baseline_search_16"
+                android:background="?android:selectableItemBackground"
+                android:layout_width="36dp"
+                android:layout_height="36dp"/>
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_mainActivity"
