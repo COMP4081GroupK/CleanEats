@@ -51,7 +51,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return restaurants.size();
     }
 
-    public void setNumbers(List<RestaurantInfo> restaurants) {
+    public void setRestaurants(List<RestaurantInfo> restaurants) {
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }

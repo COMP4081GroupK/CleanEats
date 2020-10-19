@@ -1,5 +1,6 @@
 package com.example.cleaneats;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,9 @@ public class MainActivity extends AppCompatActivity{
     private Button searchButton;
 
     String keyword = "";
+
+    private List<RestaurantInfo> restaurantInfos = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +67,27 @@ public class MainActivity extends AppCompatActivity{
         recyclerView.setAdapter(adapter);
 
         readScores();
-        adapter.setNumbers(restaurantInfos);
+        adapter.setRestaurants(restaurantInfos);
     }
 
-    private List<RestaurantInfo> restaurantInfos = new ArrayList<>();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_sort_ascending:
+                selectionSortAscending();
+                return true;
+            case R.id.action_sort_descending:
+                selectionSortDescending();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void readScores() {
         InputStream is = getResources().openRawResource(R.raw.shelby);
@@ -106,5 +129,55 @@ public class MainActivity extends AppCompatActivity{
             Log.wtf("MyActivity", "Error reading data file on line " + line, e);
             e.printStackTrace();
         }
+    }
+
+    private void selectionSortAscending() {
+        int n = restaurantInfos.size();
+
+        for (int i = 0; i < n-1; i++)
+        {
+            int minIndex = i;
+            for (int j = i+1; j < n; j++) {
+                if(restaurantInfos.get(j).getScore() < restaurantInfos.get(minIndex).getScore()) {
+                    minIndex = j;
+                }
+
+            RestaurantInfo min = restaurantInfos.get(minIndex);
+            RestaurantInfo org = restaurantInfos.get(i);
+
+            restaurantInfos.remove(i);
+            restaurantInfos.add(i, min);
+
+            restaurantInfos.remove(minIndex);
+            restaurantInfos.add(minIndex, org);
+            }
+        }
+
+        adapter.setRestaurants(restaurantInfos);
+    }
+
+    private void selectionSortDescending() {
+        int n = restaurantInfos.size();
+
+        for (int i = 0; i < n-1; i++)
+        {
+            int maxIndex = i;
+            for (int j = i+1; j < n; j++) {
+                if(restaurantInfos.get(j).getScore() > restaurantInfos.get(maxIndex).getScore()) {
+                    maxIndex = j;
+                }
+
+                RestaurantInfo min = restaurantInfos.get(maxIndex);
+                RestaurantInfo org = restaurantInfos.get(i);
+
+                restaurantInfos.remove(i);
+                restaurantInfos.add(i, min);
+
+                restaurantInfos.remove(maxIndex);
+                restaurantInfos.add(maxIndex, org);
+            }
+        }
+
+        adapter.setRestaurants(restaurantInfos);
     }
 }
