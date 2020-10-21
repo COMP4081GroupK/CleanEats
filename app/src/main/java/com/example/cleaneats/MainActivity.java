@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,7 +58,34 @@ public class MainActivity extends AppCompatActivity{
 
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.putExtra("keyword", keyword);
-                startActivity(intent);
+                startActivity(intent);  //Brings you to a "new" activity, but with only your filtered results
+            }
+        });
+
+        keywordEditTextMain.addTextChangedListener(new TextWatcher(){   //Updates list as you type
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {    //right before the onTextChanged
+                restaurantInfos.clear();
+                adapter.notifyDataSetChanged(); //First, you clear out the list...
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {   //as you type
+                keyword = keywordEditTextMain.getText().toString();
+
+                readScores();
+                adapter.setRestaurants(restaurantInfos);
+                /*THEN add filtered results. Should be same as startup. Only, you know, without restarting the whole dang activity
+                KEEP THE CURRENT CODE FOR SEARCH BUTTON, this code should update fine but in case there's some bug we aren't considering,
+                the search button will force the activity to restart with correct data
+
+                Very helpful for the users who forget about the apostrophe in McDonald's
+
+                 */
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //Android Studio pitches a fit if we don't implement these
             }
         });
 
@@ -71,13 +100,13 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { //shows the score-sorting menu
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {  //the score-sorting menu itself
         switch(item.getItemId()) {
             case R.id.action_sort_ascending:
                 selectionSortAscending();
@@ -131,7 +160,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private void selectionSortAscending() {
+    private void selectionSortAscending() { //lowest scores get shown 1st
         int n = restaurantInfos.size();
 
         for (int i = 0; i < n-1; i++)
@@ -156,7 +185,7 @@ public class MainActivity extends AppCompatActivity{
         adapter.setRestaurants(restaurantInfos);
     }
 
-    private void selectionSortDescending() {
+    private void selectionSortDescending() {    //highest scores shown 1st
         int n = restaurantInfos.size();
 
         for (int i = 0; i < n-1; i++)
