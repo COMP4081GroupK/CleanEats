@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements RestaurantAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.rv_mainActivity);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RestaurantAdapter(this);
+        adapter = new RestaurantAdapter(this, this);
         recyclerView.setAdapter(adapter);
 
         readScores();
@@ -208,5 +208,16 @@ public class MainActivity extends AppCompatActivity{
         }
 
         adapter.setRestaurants(restaurantInfos);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(MainActivity.this, ObservationsActivity.class);
+        RestaurantInfo restaurantInfo = restaurantInfos.get(position);
+        intent.putExtra("restaurant_name", restaurantInfo.getName());
+        intent.putExtra("restaurant_address", restaurantInfo.getAddress());
+        intent.putExtra("restaurant_score", restaurantInfo.getScore());
+
+        startActivity(intent);
     }
 }

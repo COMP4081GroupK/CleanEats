@@ -18,10 +18,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     private Context context;
     //private List<String> justNames; //We use this list for the search functions, as long as somebody remembers to actually declare it
     private List<RestaurantInfo> tempList;
+    private ItemClickListener clickListener;
 
-    public RestaurantAdapter(Context context) {
+    public RestaurantAdapter(Context context, ItemClickListener clickListener) {
         this.context = context;
         tempList = new ArrayList<>();  //remember to initialize your arrays, kids! Or else.
+        this.clickListener = clickListener;
 
     }
 
@@ -63,7 +65,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    class RestaurantViewHolder extends RecyclerView.ViewHolder {
+    class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView restaurantName;
         private TextView restaurantAddress;
@@ -75,6 +77,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             restaurantName = itemView.findViewById(R.id.tv_listItem_restaurantName);
             restaurantAddress = itemView.findViewById(R.id.tv_listItem_restaurantAddress);
             inspectionScore = itemView.findViewById(R.id.tv_listItem_inspectionScore);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition());
         }
     }
 
@@ -108,5 +117,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             }
         };
         return filter;
+    }
+
+    interface ItemClickListener {
+        void onItemClick(int position);
     }
 }
