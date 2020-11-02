@@ -18,13 +18,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.*;
 import android.widget.TextView;
 
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -46,9 +39,6 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
     private RecyclerView observationRecyclerView;
     private ObservationAdapter adapter;
 
-    private MapView mapView;    //misc mapView stuff if I have time to implement
-    private GoogleMap map;
-    private LatLng latLng;
     private LayoutInflater inflater;
     private ViewGroup container;
 
