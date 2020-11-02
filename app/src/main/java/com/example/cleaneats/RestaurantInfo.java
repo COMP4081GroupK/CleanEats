@@ -1,10 +1,13 @@
 package com.example.cleaneats;
 
+import java.util.List;
+
 public class RestaurantInfo {
     private String name;
     private String address;
     private String date;
     private int score;
+    private List<String> observations;
 
     public String getName() {
         return name;
@@ -37,6 +40,10 @@ public class RestaurantInfo {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public List<String> getObservations() { return observations; }
+
+    public void setObservations(List<String> observations) { this.observations = observations; }
 
     @Override
     public String toString() {

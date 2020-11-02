@@ -18,6 +18,7 @@ public class ObservationsActivity extends AppCompatActivity {
     String address = "";
     String name = "";
     int score = 0;
+    List<String> observations = new ArrayList<>();
 
     private TextView restaurantName;
     private TextView restaurantScore;
@@ -37,6 +38,7 @@ public class ObservationsActivity extends AppCompatActivity {
             address = intent.getStringExtra("restaurant_address");
             name = intent.getStringExtra("restaurant_name");
             score = intent.getIntExtra("restaurant_score", -1);
+            observations = intent.getStringArrayListExtra("restaurant_observation");
         }
 
         restaurantName = findViewById(R.id.tv_observationsActivity_restName);
@@ -46,13 +48,13 @@ public class ObservationsActivity extends AppCompatActivity {
         restaurantAddress = findViewById(R.id.tv_observationsActivity_restAddress);
         restaurantAddress.setText(address);
 
-        List<String> observations = new ArrayList<>();
+/*
         String observation = "This is a test string to show that the ObservationAdapter actually works alongside" +
                 "the recyclerview";
 
         for(int i = 0; i < 10; i++) {
             observations.add(observation);
-        }
+        }*/
 
         observationRecyclerView = findViewById(R.id.rv_observationsActivity);
         observationRecyclerView.setLayoutManager(new LinearLayoutManager(this));

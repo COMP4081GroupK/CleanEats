@@ -132,6 +132,11 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                 Log.d("MyActivity", "Line: " + line);
                 // Split by ','
                 String[] tokens = line.split(",");
+                List<String> observations = new ArrayList<String>();
+
+                for (int i = 4; i < tokens.length; i++) {
+                    observations.add(tokens[i]);
+                }
 
                 String searchName = tokens[0].toLowerCase();
                 RestaurantInfo sample = new RestaurantInfo();
@@ -143,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     sample.setAddress(tokens[1]);
                     sample.setDate(tokens[2]);
                     sample.setScore(Integer.parseInt(tokens[3]));
+                    sample.setObservations(observations);
                     restaurantInfos.add(sample);
                 } else if (keyword.equals("")) { //If keyword is empty then just display every restaurant
                     // Read the data
@@ -150,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     sample.setAddress(tokens[1]);
                     sample.setDate(tokens[2]);
                     sample.setScore(Integer.parseInt(tokens[3]));
+                    sample.setObservations(observations);
                     restaurantInfos.add(sample);
                 }
 
@@ -217,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         intent.putExtra("restaurant_name", restaurantInfo.getName());
         intent.putExtra("restaurant_address", restaurantInfo.getAddress());
         intent.putExtra("restaurant_score", restaurantInfo.getScore());
-
+        intent.putStringArrayListExtra("restaurant_observation", (ArrayList<String>) restaurantInfo.getObservations());
         startActivity(intent);
     }
 }
