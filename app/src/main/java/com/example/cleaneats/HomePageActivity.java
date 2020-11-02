@@ -12,6 +12,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     private Button searchButton;
     private EditText keywordEditText;
+    private Button aboutUs;
 
     String keyword = "";
 
@@ -31,6 +32,16 @@ public class HomePageActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(HomePageActivity.this, MainActivity.class);
                 intent.putExtra("keyword", keyword);
+                startActivity(intent);
+            }
+        });
+
+        aboutUs = findViewById(R.id.aboutUsButton);
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(HomePageActivity.this, AboutUsActivity.class);
                 startActivity(intent);
             }
         });
