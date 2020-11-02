@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 name,address,date,score
 Peggy's Healthy Home Cooking,326 S. Cleveland  Memphis. TN 38104,September 15. 2020,84
 LAS BRASAS,3582 KIRBY PARKWAY  Memphis. TN 38115,September 15. 2020,98
@@ -121,6 +122,8 @@ Terrace (Restaurant),50 Harbor Town Square  Memphis. TN 38103,August 27. 2020,97
 El Toro Loco Mexican Bar & Grill (Bar #1 ),2617 Poplar Ave.  Memphis. TN 38112,August 26. 2020,95
 Pop's Bar And Grill,6365 Navy Rd.  Millington. TN 38053,August 26. 2020,96
 =======
+=======
+>>>>>>> Stashed changes
 name,address,date,score,o1,o2,o3,o4,o5,o6,o7,o8,o9,o10,o11,o12,o13,o14,o15,o16,o17,o18,o19,o20,o21,o22
 Peggy's Healthy Home Cooking,326 S. Cleveland Memphis. TN 38104,September 15. 2020,84,14: Cutting boards need replacing.,21: Improper date marking for prepped food.,34: Need thermometers in refrigerators.,35: Improper labels on RTE foods.,37: Food items stored on the floor. Must be stored 6 inches. From floor.,42: Utensils improperly stored.,45: Microwave need cleaning. Can opener need cleaning. Grills need cleaning.,53: Physical not maintained. Floors need repairing in storage room.,,,,,,,,,,,,,,
 Las Brasas,3582 Kirby Parkway Memphis. TN 38115,September 15. 2020,98,35: 1200-23-01-.03(5)(a)7. Food in the cooler are not labeled.,42: 1200-23-01-.04(9)(c)1. Freezer rack is broken,,,,,,,,,,,,,,,,,,,,
@@ -241,4 +244,7 @@ Pig On Beale. Inc.,167 Beale St. Memphis. TN 38103,August 27. 2020,96,,,,,,,,,,,
 Terrace,50 Harbor Town Sq. Memphis. TN 38103,August 27. 2020,97,,,,,,,,,,,,,,,,,,,,,,
 El Toro Loco Mexican Bar & Grill,2617 Poplar Ave. Memphis. TN 38112,August 26. 2020,95,,,,,,,,,,,,,,,,,,,,,,
 Pop's Bar And Grill,6365 Navy Rd. Millington. TN 38053,August 26. 2020,96,,,,,,,,,,,,,,,,,,,,,,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
