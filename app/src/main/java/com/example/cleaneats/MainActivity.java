@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
 
         Intent intent = getIntent();
         if (intent != null) {
-            keyword = intent.getStringExtra("keyword").toLowerCase();
+            keyword = intent.getStringExtra("keyword");
+            if (keyword == null) keyword = "";
         }
 
         //This lets the user filter results from the main page itself
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
             @Override
             public void onClick(View view) {
                 keyword = keywordEditTextMain.getText().toString();
-
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.putExtra("keyword", keyword);
                 startActivity(intent);  //Brings you to a "new" activity, but with only your filtered results
@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         intent.putExtra("restaurant_name", restaurantInfo.getName());
         intent.putExtra("restaurant_address", restaurantInfo.getAddress());
         intent.putExtra("restaurant_score", restaurantInfo.getScore());
+        intent.putExtra("keyword", keyword);
         intent.putStringArrayListExtra("restaurant_observation", (ArrayList<String>) restaurantInfo.getObservations());
         startActivity(intent);
     }

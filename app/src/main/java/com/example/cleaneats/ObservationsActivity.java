@@ -1,5 +1,6 @@
 package com.example.cleaneats;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainer;
 import androidx.fragment.app.FragmentManager;
@@ -27,9 +28,11 @@ import java.util.zip.Inflater;
 
 public class ObservationsActivity extends AppCompatActivity/* implements OnMapReadyCallback*/{
 
+    String keyword = "";
+
     String address = "";
     String name = "";
-    int score = 0;
+    int inspectionScore = 0;
     List<String> observations = new ArrayList<>();
 
     private TextView restaurantName;
@@ -56,9 +59,10 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
 
         Intent intent = getIntent();
         if (intent != null) {
+            keyword = intent.getStringExtra("keyword");
             address = intent.getStringExtra("restaurant_address");
             name = intent.getStringExtra("restaurant_name");
-            score = intent.getIntExtra("restaurant_score", -1);
+            inspectionScore = intent.getIntExtra("restaurant_score", -1);
             observations = intent.getStringArrayListExtra("restaurant_observation");
 
             //getting location in lat/longitude
@@ -86,9 +90,17 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
         restaurantName = findViewById(R.id.tv_observationsActivity_restName);
         restaurantName.setText(name);
         restaurantScore = findViewById(R.id.tv_observationsActivity_restScore);
-        restaurantScore.setText(score + "");
+        restaurantScore.setText(inspectionScore + "");
         restaurantAddress = findViewById(R.id.tv_observationsActivity_restAddress);
         restaurantAddress.setText(address);
+
+        if (inspectionScore < 60) {
+            restaurantScore.setBackground(getDrawable(R.drawable.bad_score_circle));
+        } else if (inspectionScore < 80) {
+            restaurantScore.setBackground(getDrawable(R.drawable.medium_score_circle));
+        } else if (inspectionScore <= 100) {
+            restaurantScore.setBackground(getDrawable(R.drawable.good_score_circle));
+        }
 
         observationRecyclerView = findViewById(R.id.rv_observationsActivity);
         observationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -103,10 +115,20 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
         //map.addMarker(new MarkerOptions().position(latLng).title(name));
         //onCreateView(inflater, container, savedInstanceState);
         //onMapReady(map);
-
-
         }
-    /*public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(ObservationsActivity.this, MainActivity.class);
+                intent.putExtra("keyword", keyword);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+        /*public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_observations, container, false);
 
         mapView = (MapView) v.findViewById(R.id.mapView);

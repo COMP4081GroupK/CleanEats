@@ -45,6 +45,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.restaurantName.setText(restaurantName);
         holder.restaurantAddress.setText(restaurantAddress);
         holder.inspectionScore.setText(inspectionScore + "");
+
+        if (inspectionScore < 60) {
+            holder.inspectionScore.setBackground(context.getDrawable(R.drawable.bad_score_circle));
+        } else if (inspectionScore < 80) {
+            holder.inspectionScore.setBackground(context.getDrawable(R.drawable.medium_score_circle));
+        } else if (inspectionScore <= 100) {
+            holder.inspectionScore.setBackground(context.getDrawable(R.drawable.good_score_circle));
+        }
     }
 
     @Override

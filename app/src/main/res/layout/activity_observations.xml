@@ -41,10 +41,12 @@
 
                 <TextView
                     android:id="@+id/tv_observationsActivity_restScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:text="98"
-                    android:textSize="36sp" />
+                    android:textColor="@android:color/black"
+                    android:textSize="36sp"
+                    android:gravity="center"/>
 
 
 
