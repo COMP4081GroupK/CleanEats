@@ -58,13 +58,13 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
 
-        <TextView
+        <Button
             android:layout_marginTop="4dp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
-            android:linksClickable="true"
+            android:onClick= "open"
             android:text="Click here for directions!" />
 
         <TextView

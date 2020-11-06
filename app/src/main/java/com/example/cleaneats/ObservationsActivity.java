@@ -2,31 +2,26 @@ package com.example.cleaneats;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentContainer;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Layout;
 import android.text.method.LinkMovementMethod;
 import android.view.*;
+import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-public class ObservationsActivity extends AppCompatActivity/* implements OnMapReadyCallback*/{
+import android.net.Uri.*;
+
+public class ObservationsActivity extends AppCompatActivity{
 
     String keyword = "";
 
@@ -42,14 +37,11 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
     private RecyclerView observationRecyclerView;
     private ObservationAdapter adapter;
 
-    private LayoutInflater inflater;
-    private ViewGroup container;
-
     private Geocoder geocoder;
     private double lat;
     private double lng;
     private List<Address> addresses;
-    private TextView link;
+    private Button link;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +67,9 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
             lat = addresses.get(0).getLatitude();
             lng = addresses.get(0).getLongitude();
 
-            link =(TextView)findViewById(R.id.textView);
+            link =(Button) findViewById(R.id.textView);
             link.setClickable(true);
             link.setMovementMethod(LinkMovementMethod.getInstance());
-            String linkName = name.replace(' ', '+');
-            //setting up the google maps link
-
-            String text = "Click Link for Directions: https://www.google.com/maps/dir//" + linkName + "/@" + lat + "," + lng;
-            link.setText(Html.fromHtml(text));
 
 
         }
@@ -110,11 +97,16 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
 
         adapter.setObservations(observations);
 
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String linkName = name.replace(' ', '+');
+                String text = "https://www.google.com/maps/dir//" + linkName + "/@" + lat + "," + lng;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(text));
+                startActivity(intent);
+            }
+        });
 
-        //and now the map
-        //map.addMarker(new MarkerOptions().position(latLng).title(name));
-        //onCreateView(inflater, container, savedInstanceState);
-        //onMapReady(map);
         }
 
     @Override
@@ -128,48 +120,7 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
         return super.onOptionsItemSelected(item);
     }
 
-        /*public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_observations, container, false);
 
-        mapView = (MapView) v.findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-
-
-        return v;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-    }
-
-    @Override
-    public void onResume() {
-        mapView.onResume();
-        super.onResume();
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }*/
 
 
 
