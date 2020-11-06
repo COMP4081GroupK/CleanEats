@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                 RestaurantInfo sample = new RestaurantInfo();
 
                 //Only add the restaurants that have names that match the search keyword
-                if(searchName.contains(keyword)) {
+                if(searchName.contains(keyword) && !(keyword.equals(""))) {
                     // Read the data
                     sample.setName(tokens[0]);
                     sample.setAddress(tokens[1]);
