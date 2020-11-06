@@ -81,7 +81,7 @@ public class ObservationsActivity extends AppCompatActivity/* implements OnMapRe
             String linkName = name.replace(' ', '+');
             //setting up the google maps link
 
-            String text = "Directions: https://www.google.com/maps/dir//" + linkName + "/@" + lat + "," + lng;
+            String text = "Click Link for Directions: https://www.google.com/maps/dir//" + linkName + "/@" + lat + "," + lng;
             link.setText(Html.fromHtml(text));
 
 

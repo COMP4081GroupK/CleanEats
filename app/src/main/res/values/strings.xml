@@ -2,4 +2,10 @@
     <string name="app_name">Clean Eats</string>
     <string name="search">Search</string>
     <string name="filter_by_name">Filter By Name</string>
+
+    <string name="my_link">
+    <a href="http://stackoverflow.com/questions/9204303/android-is-it-possible-to-add-a-clickable-link-into-a-string-resource">
+        Click me!
+    </a>
+</string>
 </resources>
