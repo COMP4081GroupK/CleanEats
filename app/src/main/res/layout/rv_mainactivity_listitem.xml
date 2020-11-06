@@ -69,7 +69,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="bottom"
                     android:textSize="10sp"
-                    android:text="Website"
+                    android:text="Google"
                     android:background="?android:selectableItemBackground"
                     tools:text="Website"/>
 

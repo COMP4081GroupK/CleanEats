@@ -21,7 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RestaurantAdapter.ItemClickListener {
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     private RestaurantAdapter adapter;
     private EditText keywordEditTextMain;
     private Button searchButton;
+
+    private Button googleSearchButton;
 
     String keyword = "";
 
@@ -129,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
             // Step over headers
             reader.readLine();
             while ((line = reader.readLine()) != null) {
-                Log.d("MyActivity", "Line: " + line);
+                //Log.d("MyActivity", "Line: " + line);
                 // Split by ','
                 String[] tokens = line.split(",");
                 List<String> observations = new ArrayList<String>();
@@ -147,7 +152,15 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     sample.setName(tokens[0]);
                     sample.setAddress(tokens[1]);
                     sample.setDate(tokens[2]);
-                    sample.setScore(Integer.parseInt(tokens[3]));
+
+                    String date = tokens[2];
+                    int baseScore = Integer.parseInt(tokens[3]);
+                    int numOfObservations = observations.size();
+
+                    int weightedScore = weightScore(baseScore, numOfObservations, date);
+
+                    sample.setScore(weightedScore);
+
                     sample.setObservations(observations);
                     restaurantInfos.add(sample);
                 } else if (keyword.equals("")) { //If keyword is empty then just display every restaurant
@@ -155,15 +168,21 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     sample.setName(tokens[0]);
                     sample.setAddress(tokens[1]);
                     sample.setDate(tokens[2]);
-                    sample.setScore(Integer.parseInt(tokens[3]));
+
+                    String date = tokens[2];
+                    int baseScore = Integer.parseInt(tokens[3]);
+                    int numOfObservations = observations.size();
+
+                    int weightedScore = weightScore(baseScore, numOfObservations, date);
+
+                    sample.setScore(weightedScore);
                     sample.setObservations(observations);
                     restaurantInfos.add(sample);
                 }
 
             }
-        } catch (IOException e) {
-            Log.wtf("MyActivity", "Error reading data file on line " + line, e);
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Log.wtf("MyActivity", "Error reading data file on line " + line);
         }
     }
 
@@ -227,5 +246,31 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         intent.putExtra("keyword", keyword);
         intent.putStringArrayListExtra("restaurant_observation", (ArrayList<String>) restaurantInfo.getObservations());
         startActivity(intent);
+    }
+
+    public int weightScore(int baseScore, int numOfObservations, String inspectionDate) {
+        //.7 * baseScore + .2 * numOfObservations + .1 * inspectionDateDifference if there are observations
+        int weightedScore = 0;
+
+        long currentDate = new Date().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+
+        Date date = new Date();
+        try {
+            date = df.parse(inspectionDate);
+        } catch (Exception ex) {
+
+        }
+        long inspectionDateLong = date.getTime();
+
+        long differenceInTime = currentDate - inspectionDateLong;
+        int inspectionDateDifference = (int)(differenceInTime % 100);
+
+        weightedScore = (int)(.8 * baseScore);
+        weightedScore += (int)(10 - numOfObservations);
+        weightedScore += (int)(.1 * inspectionDateDifference);
+
+
+        return weightedScore;
     }
 }

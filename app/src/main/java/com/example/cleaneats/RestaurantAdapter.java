@@ -1,6 +1,8 @@
 package com.example.cleaneats;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        String restaurantName = restaurants.get(position).getName();
+        final String restaurantName = restaurants.get(position).getName();
         String restaurantAddress = restaurants.get(position).getAddress();
         int inspectionScore = restaurants.get(position).getScore();
 
@@ -53,6 +55,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         } else if (inspectionScore <= 100) {
             holder.inspectionScore.setBackground(context.getDrawable(R.drawable.good_score_circle));
         }
+
+        holder.googleSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, restaurantName);
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -79,12 +92,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private TextView restaurantAddress;
         private TextView inspectionScore;
 
+        private Button googleSearchButton;
+
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
 
             restaurantName = itemView.findViewById(R.id.tv_listItem_restaurantName);
             restaurantAddress = itemView.findViewById(R.id.tv_listItem_restaurantAddress);
             inspectionScore = itemView.findViewById(R.id.tv_listItem_inspectionScore);
+            googleSearchButton = itemView.findViewById(R.id.bt_listItem_websiteLink);
 
             itemView.setOnClickListener(this);
         }
