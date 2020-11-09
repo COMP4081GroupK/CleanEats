@@ -33,9 +33,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     private RestaurantAdapter adapter;
     private EditText keywordEditTextMain;
     private Button searchButton;
-
-    private Button googleSearchButton;
-
+    
     String keyword = "";
 
     private List<RestaurantInfo> restaurantInfos = new ArrayList<>();
