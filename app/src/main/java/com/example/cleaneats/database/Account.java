@@ -17,15 +17,21 @@ public class Account {
     @ColumnInfo(name = "password")
     private String password;
 
-    @ColumnInfo(name = "num_of_reports")
-    private int numOfReports;
+    @ColumnInfo(name = "first_name")
+    private String firstName;
+
+    @ColumnInfo(name = "last_name")
+    private String lastName;
+
 
     public Account(String userName,
                    String password,
-                   int numOfReports) {
+                   String firstName,
+                   String lastName) {
         this.userName = userName;
         this.password = password;
-        this.numOfReports = numOfReports;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public void setId(int id) {
@@ -36,10 +42,6 @@ public class Account {
         return id;
     }
 
-    public int getNumOfReports() {
-        return numOfReports;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -48,8 +50,12 @@ public class Account {
         return userName;
     }
 
-    public void setNumOfReports(int numOfReports) {
-        this.numOfReports = numOfReports;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public void setPassword(String password) {
@@ -60,5 +66,11 @@ public class Account {
         this.userName = userName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

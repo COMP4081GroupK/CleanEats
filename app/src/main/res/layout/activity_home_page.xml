@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".HomePageActivity">
 
+    <TextView
+        android:id="@+id/tv_homePageActivity_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        tools:text="Name"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <LinearLayout
         android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
@@ -15,6 +26,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/bt_homePageActivity_signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground"
