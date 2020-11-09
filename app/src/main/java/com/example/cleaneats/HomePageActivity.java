@@ -15,6 +15,7 @@ public class HomePageActivity extends AppCompatActivity {
     private EditText keywordEditText;
     private Button aboutUs;
     private Button signUp;
+    private Button signIn;
     private TextView userName;
 
     String keyword = "";
@@ -62,6 +63,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomePageActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        signIn = findViewById(R.id.bt_homePageActivity_signIn);
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePageActivity.this, SignInActivity.class);
                 startActivity(intent);
             }
         });

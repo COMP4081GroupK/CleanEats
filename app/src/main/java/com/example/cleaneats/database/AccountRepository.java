@@ -9,7 +9,6 @@ import java.util.List;
 public class AccountRepository {
 
     private AccountDao mAccountDao;
-    private LiveData<List<Account>> mAccounts;
 
     public AccountRepository(Application application) {
         AccountDatabase db = AccountDatabase.getDatabase(application);
@@ -26,5 +25,9 @@ public class AccountRepository {
         AccountDatabase.databaseWriteExecutor.execute(() -> {
             mAccountDao.insert(report);
         });
+    }
+
+    public LiveData<List<Account>> getAllAccounts() {
+        return mAccountDao.getAllAccounts();
     }
 }
