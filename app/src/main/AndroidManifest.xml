@@ -19,6 +19,9 @@
             android:name=".SignUpActivity"
             android:parentActivityName=".HomePageActivity" />
         <activity
+            android:name=".ReportActivity"
+            android:parentActivityName=".ObservationsActivity" />
+        <activity
             android:name=".ObservationsActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".HomePageActivity">
