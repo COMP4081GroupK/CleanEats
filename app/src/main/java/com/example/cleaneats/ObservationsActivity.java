@@ -43,6 +43,8 @@ public class ObservationsActivity extends AppCompatActivity{
     private List<Address> addresses;
     private Button link;
 
+    private Button report;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,7 @@ public class ObservationsActivity extends AppCompatActivity{
             lat = addresses.get(0).getLatitude();
             lng = addresses.get(0).getLongitude();
 
-            link =(Button) findViewById(R.id.textView);
+            link =(Button) findViewById(R.id.directions);
             link.setClickable(true);
             link.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -103,6 +105,16 @@ public class ObservationsActivity extends AppCompatActivity{
                 String linkName = name.replace(' ', '+');
                 String text = "https://www.google.com/maps/dir//" + linkName + "/@" + lat + "," + lng;
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(text));
+                startActivity(intent);
+            }
+        });
+
+        //the report button
+        report = findViewById(R.id.report);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ObservationsActivity.this, ReportActivity.class);
                 startActivity(intent);
             }
         });
