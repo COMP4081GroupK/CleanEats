@@ -43,13 +43,13 @@ public class ObservationsActivity extends AppCompatActivity{
     private List<Address> addresses;
     private Button link;
 
-    private Button report;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observations);
         setTitle("Observations");
+
+        link =(Button) findViewById(R.id.directions);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -59,19 +59,20 @@ public class ObservationsActivity extends AppCompatActivity{
             inspectionScore = intent.getIntExtra("restaurant_score", -1);
             observations = intent.getStringArrayListExtra("restaurant_observation");
 
-            //getting location in lat/longitude
-            geocoder = new Geocoder(this);
-            try {
-                addresses = geocoder.getFromLocationName(address, 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            lat = addresses.get(0).getLatitude();
-            lng = addresses.get(0).getLongitude();
+            if(address != null) {
+                //getting location in lat/longitude
+                geocoder = new Geocoder(this);
+                try {
+                    addresses = geocoder.getFromLocationName(address, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                lat = addresses.get(0).getLatitude();
+                lng = addresses.get(0).getLongitude();
 
-            link =(Button) findViewById(R.id.directions);
-            link.setClickable(true);
-            link.setMovementMethod(LinkMovementMethod.getInstance());
+                link.setClickable(true);
+                link.setMovementMethod(LinkMovementMethod.getInstance());
+            }
 
 
         }
@@ -109,25 +110,31 @@ public class ObservationsActivity extends AppCompatActivity{
             }
         });
 
-        //the report button
-        report = findViewById(R.id.report);
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ObservationsActivity.this, ReportActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
 
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.observations_menu, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(ObservationsActivity.this, MainActivity.class);
+                Intent intentHome = new Intent(ObservationsActivity.this, MainActivity.class);
+                intentHome.putExtra("keyword", keyword);
+                startActivity(intentHome);
+                return true;
+            case R.id.action_report:
+                Intent intent = new Intent(ObservationsActivity.this, ReportActivity.class);
+                intent.putExtra("restaurant_name", name);
+                intent.putExtra("restaurant_address", address);
+                intent.putExtra("restaurant_score", inspectionScore);
                 intent.putExtra("keyword", keyword);
+                intent.putStringArrayListExtra("restaurant_observation", (ArrayList)observations);
                 startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
