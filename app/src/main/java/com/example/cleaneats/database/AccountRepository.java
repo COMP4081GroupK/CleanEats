@@ -30,4 +30,8 @@ public class AccountRepository {
     public LiveData<List<Account>> getAllAccounts() {
         return mAccountDao.getAllAccounts();
     }
+
+    public LiveData<Account> getSpecificAccount(String username) {
+        return mAccountDao.getSpecificAccount(username);
+    }
 }

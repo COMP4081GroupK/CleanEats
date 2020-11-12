@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     private Button searchButton;
     
     String keyword = "";
+    String username = "";
 
     private List<RestaurantInfo> restaurantInfos = new ArrayList<>();
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         Intent intent = getIntent();
         if (intent != null) {
             keyword = intent.getStringExtra("keyword");
+            username = intent.getStringExtra("username");
             if (keyword == null) keyword = "";
         }
 
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                 keyword = keywordEditTextMain.getText().toString();
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.putExtra("keyword", keyword);
+                intent.putExtra("username", username);
                 startActivity(intent);  //Brings you to a "new" activity, but with only your filtered results
             }
         });
@@ -116,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                 return true;
             case R.id.action_sort_descending:
                 selectionSortDescending();
+                return true;
+            case android.R.id.home:
+                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -242,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         intent.putExtra("restaurant_address", restaurantInfo.getAddress());
         intent.putExtra("restaurant_score", restaurantInfo.getScore());
         intent.putExtra("keyword", keyword);
+        intent.putExtra("username", username);
         intent.putStringArrayListExtra("restaurant_observation", (ArrayList<String>) restaurantInfo.getObservations());
         startActivity(intent);
     }
@@ -266,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
 
         weightedScore = (int)(.8 * baseScore);
         weightedScore += (int)(10 - numOfObservations);
-        weightedScore += (int)(.1 * inspectionDateDifference);
+        weightedScore += (int)(.1 * (1 - inspectionDateDifference));
 
 
         return weightedScore;

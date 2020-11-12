@@ -45,6 +45,7 @@ public class HomePageActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(HomePageActivity.this, MainActivity.class);
                 intent.putExtra("keyword", keyword);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });

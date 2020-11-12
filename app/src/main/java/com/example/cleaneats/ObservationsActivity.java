@@ -24,6 +24,7 @@ import android.net.Uri.*;
 public class ObservationsActivity extends AppCompatActivity{
 
     String keyword = "";
+    String username = "";
 
     String address = "";
     String name = "";
@@ -58,6 +59,7 @@ public class ObservationsActivity extends AppCompatActivity{
             name = intent.getStringExtra("restaurant_name");
             inspectionScore = intent.getIntExtra("restaurant_score", -1);
             observations = intent.getStringArrayListExtra("restaurant_observation");
+            username = intent.getStringExtra("username");
 
             if(address != null) {
                 //getting location in lat/longitude
@@ -124,6 +126,7 @@ public class ObservationsActivity extends AppCompatActivity{
             case android.R.id.home:
                 Intent intentHome = new Intent(ObservationsActivity.this, MainActivity.class);
                 intentHome.putExtra("keyword", keyword);
+                intentHome.putExtra("username", username);
                 startActivity(intentHome);
                 return true;
             case R.id.action_report:
@@ -132,6 +135,7 @@ public class ObservationsActivity extends AppCompatActivity{
                 intent.putExtra("restaurant_address", address);
                 intent.putExtra("restaurant_score", inspectionScore);
                 intent.putExtra("keyword", keyword);
+                intent.putExtra("username", username);
                 intent.putStringArrayListExtra("restaurant_observation", (ArrayList)observations);
                 startActivity(intent);
                 return true;
