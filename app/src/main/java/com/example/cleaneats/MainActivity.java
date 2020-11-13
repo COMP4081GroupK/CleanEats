@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -186,9 +187,13 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     restaurantInfos.add(sample);
                 }
 
+
             }
         } catch (IOException ex) {
             Log.wtf("MyActivity", "Error reading data file on line " + line);
+        }
+        if (restaurantInfos.size() == 0) {
+            Toast.makeText(this, "No results found", Toast.LENGTH_SHORT).show();
         }
     }
 
